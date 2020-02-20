@@ -44,3 +44,11 @@ class PhotoDetailAPIView(generics.RetrieveAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
     lookup_field = 'id'
+
+
+class PhotoUpdateAPIView(generics.UpdateAPIView):
+    permission_classes = []
+    authentication_classes = []
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    lookup_field = 'id'
