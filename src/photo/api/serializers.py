@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from photo.models import Photo
+from ..models import Photo
 
 
 class PhotoSerializers(serializers.ModelSerializer):
@@ -10,9 +10,6 @@ class PhotoSerializers(serializers.ModelSerializer):
             'content',
             'image'
         ]
-
-    def validate_content(self, value):
-        pass
 
     def validate(self, data):
         content = data.get("content", None)
