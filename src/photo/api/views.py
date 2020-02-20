@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, mixins
 
 from rest_framework.response import Response
 
@@ -17,25 +17,21 @@ class PhotoListSearchAPIView(APIView):
         return Response(serializer.data)
 
 
-class PhotoAPIView(generics.ListAPIView):
+class PhotoAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     permission_classes = []
     authentication_classes = []
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
 
     def get_queryset(self):
-        qs =  Photo.objects.all()
+        qs = Photo.objects.all()
         query = self.request.GET.get('q')
         if query is not None:
             qs = qs.filter(content__icontains=query)
         return qs
 
-
-class PhotoCreateAPIView(generics.CreateAPIView):
-    permission_classes = []
-    authentication_classes = []
-    queryset = Photo.objects.all()
-    serializer_class = PhotoSerializer
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class PhotoDetailAPIView(generics.RetrieveAPIView):
@@ -47,6 +43,14 @@ class PhotoDetailAPIView(generics.RetrieveAPIView):
 
 
 class PhotoUpdateAPIView(generics.UpdateAPIView):
+    permission_classes = []
+    authentication_classes = []
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    lookup_field = 'id'
+
+
+class PhotoDeleteAPIView(generics.DestroyAPIView):
     permission_classes = []
     authentication_classes = []
     queryset = Photo.objects.all()
