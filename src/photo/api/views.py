@@ -34,20 +34,18 @@ class PhotoAPIView(mixins.CreateModelMixin, generics.ListAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class PhotoDetailAPIView(generics.RetrieveAPIView):
+class PhotoDetailAPIView(mixins.UpdateModelMixin,mixins.DestroyModelMixin, generics.RetrieveAPIView):
     permission_classes = []
     authentication_classes = []
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
     lookup_field = 'id'
 
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-class PhotoUpdateAPIView(generics.UpdateAPIView):
-    permission_classes = []
-    authentication_classes = []
-    queryset = Photo.objects.all()
-    serializer_class = PhotoSerializer
-    lookup_field = 'id'
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class PhotoDeleteAPIView(generics.DestroyAPIView):
