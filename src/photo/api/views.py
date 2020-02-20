@@ -37,3 +37,10 @@ class PhotoCreateAPIView(generics.CreateAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
 
+
+class PhotoDetailAPIView(generics.RetrieveAPIView):
+    permission_classes = []
+    authentication_classes = []
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    lookup_field = 'id'
