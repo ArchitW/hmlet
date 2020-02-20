@@ -3,9 +3,40 @@ import json
 import os
 
 ENDPOINT = "http://127.0.0.1:8000/api/photo/"
+AUTH_ENDPOINT = "http://127.0.0.1:8000/api/auth/"
+REFRESH_ENDPOINT = AUTH_ENDPOINT + 'refresh'
 image_path = os.path.join(os.getcwd(),"300.png")
 
 
+login_data = {
+    'username': 'archit',
+    'password': '!23456789'
+}
+
+r = requests.post(AUTH_ENDPOINT, data=login_data)
+token = r.json()#['token']
+print(token)
+
+'''
+refresh_header = {
+    'content-type': 'application/json'
+}
+refresh_payload = {
+    'token': token
+}
+ref_token = requests.post(REFRESH_ENDPOINT, data=refresh_payload, headers=refresh_header)
+resp = ref_token.json()
+print(resp)
+'''
+post_data = json.dumps({"content": "test"})
+post_headers = {
+    'content-type': 'application/json',
+    'Authorization': 'JWT ' + token
+}
+post = requests.post(ENDPOINT, data=post_data, headers=post_headers) #will fail
+print(post.text)
+
+'''
 r = requests.get(ENDPOINT)
 print(r.status_code) #should be okay
 
@@ -18,7 +49,7 @@ post_headers = {
 }
 post = requests.post(ENDPOINT, data=post_data, headers=post_headers) #will fail
 print(post.text)
-
+'''
 
 '''
 def do_img(method = 'get', data={}, is_json=True, img_path=None):
