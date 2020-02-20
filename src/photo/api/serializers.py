@@ -6,9 +6,12 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = [
+            'id',
             'user',
             'content',
-            'image'
+            'image',
+            'updated'
+
         ]
 
     def validate(self, data):
