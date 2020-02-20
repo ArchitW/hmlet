@@ -1,10 +1,11 @@
 from django.conf.urls import url
 from .views import (
     PhotoAPIView,
-    #PhotoDetailAPIView,
+    PhotoAPIDetailView,
 )
 
 urlpatterns = [
     url(r'^$', PhotoAPIView.as_view()),
-    #url(r'^(?P<id>\d+)/$', PhotoDetailAPIView.as_view()),
+    url(r'^$', PhotoAPIView.as_view()),
+    url(r'^(?P<id>\d+)/$', PhotoAPIDetailView.as_view()),
 ]

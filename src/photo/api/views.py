@@ -19,12 +19,34 @@ def is_json(json_data):
         is_valid = False
     return is_valid
 
+class PhotoAPIDetailView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.RetrieveAPIView):
+    permission_classes = []
+    authentication_classes = []
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    queryset = Photo.objects.all()
+    lookup_field = 'id'
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+    #def perform_update(self, serializer):
+    #   pass
+
+    def perform_destroy(self, instance):
+        if instance is not None:
+            return instance.delete()
+        return None
+
 
 class PhotoAPIView(
     mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
     generics.ListAPIView):
 
     permission_classes = []
@@ -50,11 +72,6 @@ class PhotoAPIView(
             self.check_object_permissions(request, obj)
         return obj
 
-    def perform_destroy(self,instance):
-        if instance is not None:
-            return instance.delete()
-        return None
-
     def get(self, request, *args, **kwargs):
         #print(request.body)
         url_passed_id = request.GET.get('id', None)
@@ -71,12 +88,3 @@ class PhotoAPIView(
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
