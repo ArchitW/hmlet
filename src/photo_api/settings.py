@@ -125,3 +125,6 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'server-uploads', 'media_root')
 MEDIA_URL = '/media/'
+
+from .restconf.main import  *
+

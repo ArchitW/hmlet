@@ -6,6 +6,21 @@ ENDPOINT = "http://127.0.0.1:8000/api/photo/"
 image_path = os.path.join(os.getcwd(),"300.png")
 
 
+r = requests.get(ENDPOINT)
+print(r.status_code) #should be okay
+
+r2=requests.get(ENDPOINT+ str(10))
+print(r2.text)
+
+post_data = json.dumps({"content": "test"})
+post_headers = {
+    'content-type': 'application/json'
+}
+post = requests.post(ENDPOINT, data=post_data, headers=post_headers) #will fail
+print(post.text)
+
+
+'''
 def do_img(method = 'get', data={}, is_json=True, img_path=None):
 
     headers = {}
@@ -26,7 +41,7 @@ def do_img(method = 'get', data={}, is_json=True, img_path=None):
 
 #do_img(method="post", data={'user': 1, 'content': ''}, is_json=False, img_path=image_path)
 do_img(method="put", data={'id':10,'user': 1, 'content': ''}, is_json=False, img_path=image_path)
-
+'''
 '''
 def do(method = 'get', data={}, is_json=True):
     headers = {}
