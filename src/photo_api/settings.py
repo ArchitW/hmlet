@@ -25,7 +25,7 @@ SECRET_KEY = 'c7qgugyt-(sbt2)gg(izv010t#+j2k6nlw)ga&-ni8)*vh15b3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['hmlet.herokuapp.com']
 
 
 # Application definition
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'photo_api.urls'
@@ -129,3 +130,5 @@ MEDIA_URL = '/media/'
 
 from .restconf.main import  *
 
+#  Add configuration for static files storage using whitenoise
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

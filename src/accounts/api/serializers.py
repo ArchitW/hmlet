@@ -36,7 +36,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         ]
 
         def get_message(self, obj):
-            return "registration successful"
+            return "registration successful3"
 
         def validate_email(self, value):
             qs = User.objects.filter(email__iexact=value)
