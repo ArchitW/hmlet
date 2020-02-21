@@ -1,7 +1,7 @@
 import json
 
 from rest_framework.authentication import SessionAuthentication
-from rest_framework import generics, mixins,permissions,pagination
+from rest_framework import generics, mixins, permissions, pagination
 from rest_framework.response import Response
 
 from django.shortcuts import get_object_or_404
@@ -36,7 +36,7 @@ class PhotoAPIDetailView(
 
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
-    queryset = Photo.objects.all()
+
     lookup_field = 'id'
 
     def put(self, request, *args, **kwargs):

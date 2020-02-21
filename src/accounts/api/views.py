@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate,get_user_model
+from django.contrib.auth import authenticate, get_user_model
 from django.db.models import Q
 
 from rest_framework.views import APIView
@@ -24,6 +24,7 @@ class AuthAPIView(APIView):
         data = request.data
         username = data.get('username')
         password = data.get('password')
+        user = authenticate(username=username, password=password)
         qs = User.objects.filter(
             Q(username__iexact=username) |
             Q(email__iexact=username)
