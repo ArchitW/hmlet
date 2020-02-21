@@ -2,7 +2,10 @@ from rest_framework import serializers,fields
 from ..models import Photo
 
 
+from accounts.api.serializers import UserPublicDisplaySerializer
+
 class PhotoSerializer(serializers.ModelSerializer):
+    user = UserPublicDisplaySerializer(read_only=True)
     flag = serializers.SerializerMethodField()
 
 
@@ -14,8 +17,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'content',
             'image',
             'updated',
-            'flag'
-
+            'flag',
         ]
         read_only_fields = ['user']
 

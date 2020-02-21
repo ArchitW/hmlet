@@ -77,6 +77,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def get_expires(self, obj):
         return timezone.now() - expires_on
 
+class UserPublicDisplaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+        ]
+
 
 
 
