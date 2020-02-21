@@ -4,7 +4,47 @@ import os
 
 ENDPOINT = "http://127.0.0.1:8000/api/photo/"
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api/auth/"
-REFRESH_ENDPOINT = AUTH_ENDPOINT + 'refresh'
+REGISTER_ENDPOINT = "http://127.0.0.1:8000/api/auth/register/"
+
+header = {
+    'content-type': 'application/json'
+}
+register_data = {
+    'username': 'asdf2',
+    'email': 'asdf2@1.com',
+    'password': '!23456789',
+    'password2': '!23456789',
+}
+
+r = requests.post(REGISTER_ENDPOINT, data=json.dumps(register_data), headers=header)
+token = r.json()
+print(token)
+
+
+login_data = {
+    'username': 'asdf2',
+    'password': '!23456789'
+}
+
+r = requests.post(AUTH_ENDPOINT, data=login_data)
+token = r.json()#['token']
+print(token)
+'''
+header = {
+    'content-type': 'application/json'
+}
+register_data = {
+    'username': '1udd2ser2',
+    'email': '122dd@1.com',
+    'password': '!23456789',
+    'password2': '!23456789',
+}
+
+r = requests.post(REGISTER_ENDPOINT, data=json.dumps(register_data), headers=header)
+token = r.json()
+print(token)
+'''
+'''REFRESH_ENDPOINT = AUTH_ENDPOINT + 'refresh'
 image_path = os.path.join(os.getcwd(),"300.png")
 
 
@@ -18,6 +58,7 @@ token = r.json()#['token']
 print(token)
 
 '''
+'''
 refresh_header = {
     'content-type': 'application/json'
 }
@@ -28,6 +69,7 @@ ref_token = requests.post(REFRESH_ENDPOINT, data=refresh_payload, headers=refres
 resp = ref_token.json()
 print(resp)
 '''
+'''
 post_data = json.dumps({"content": "test"})
 post_headers = {
     'content-type': 'application/json',
@@ -36,6 +78,7 @@ post_headers = {
 post = requests.post(ENDPOINT, data=post_data, headers=post_headers) #will fail
 print(post.text)
 
+'''
 '''
 r = requests.get(ENDPOINT)
 print(r.status_code) #should be okay
