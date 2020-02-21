@@ -6,6 +6,28 @@ ENDPOINT = "http://127.0.0.1:8000/api/photo/"
 AUTH_ENDPOINT = "http://127.0.0.1:8000/api/auth/"
 REGISTER_ENDPOINT = "http://127.0.0.1:8000/api/auth/register/"
 
+login_data = {
+    'username': 'asdf2',
+    'password': '!23456789'
+}
+
+r = requests.post(AUTH_ENDPOINT, data=login_data)
+token = r.json()['token']
+print(token)
+
+header = {
+    'content-type': 'application/json'
+}
+auth_header = {
+    #'content-type': 'application/json',
+    "Authorization": "jwt " + token
+}
+
+ENDPOINT2 = "http://127.0.0.1:8000/api/photo/6/"
+r = requests.put(ENDPOINT2, data={"content": "test content"}, headers=auth_header)
+print(r.text)
+
+'''
 header = {
     'content-type': 'application/json'
 }
@@ -20,15 +42,8 @@ r = requests.post(REGISTER_ENDPOINT, data=json.dumps(register_data), headers=hea
 token = r.json()
 print(token)
 
+'''
 
-login_data = {
-    'username': 'asdf2',
-    'password': '!23456789'
-}
-
-r = requests.post(AUTH_ENDPOINT, data=login_data)
-token = r.json()#['token']
-print(token)
 '''
 header = {
     'content-type': 'application/json'

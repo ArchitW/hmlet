@@ -1,5 +1,6 @@
 import datetime
 
+
 from django.conf import settings
 
 REST_FRAMEWORK = {
@@ -10,7 +11,15 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+  #  'DEFAULT_PAGINATION_CLASS': 'photo_api.restconf.pagination.PHOTAPIPagination'
+   'DEFAULT_FILTER_BACKENDS': (
+       'rest_framework.filters.SearchFilter',
+       'rest_framework.filters.OrderingFilter',
+   ),
+    'SEARCH_PARAM': 'search',
+    'ORDERING_PARAM': 'ordering',
+
 }
 
 JWT_AUTH = {

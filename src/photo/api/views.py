@@ -26,7 +26,11 @@ class PageNumbers(pagination.PageNumberPagination):
     page_size = 10
 
 
-class PhotoAPIDetailView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.RetrieveAPIView):
+class PhotoAPIDetailView(
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    generics.RetrieveAPIView):
+
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     pagination_class = PageNumbers
 
@@ -57,6 +61,8 @@ class PhotoAPIView(
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = PageNumbers
+    search_fields = ('user__username', 'content')
+    ordering_fields = ('user__username', 'timestamp')
 
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer

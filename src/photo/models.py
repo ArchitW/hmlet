@@ -26,3 +26,8 @@ class Photo(models.Model):
 
     def __str__(self):
         return str(self.content)[:50]
+
+
+    @property
+    def owner(self):
+        return self.owner
