@@ -1,1 +1,1 @@
-web: gunicorn src/photo_api/wsgi.py:application --log-file -
+web: photo_api.wsgi --pythonpath src --log-file -
