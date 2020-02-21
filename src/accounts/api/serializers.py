@@ -1,11 +1,24 @@
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+from rest_framework import serializers
+
+from rest_framework_jwt.settings import api_settings
+
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
+expires_on = api_settings.JWT_REFRESH_EXPIRATION_DELTA
 
 User = get_user_model()
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    token = serializers.SerializerMethodField(read_only=True)
+    expires = serializers.SerializerMethodField(read_only=True)
+    message = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
@@ -13,6 +26,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'password',
+            'token',
+            'expires',
+            'message',
         ]
 
     def create(self, validated_data):
@@ -22,6 +38,46 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user_obj.set_password(validated_data.get('password'))
         user_obj.save()
         return user_obj
+
+    def validate(self, data):
+        username = data.get("username", None)
+        if username == "":
+            username = None
+        email = data.get("email", None)
+        if email == "":
+            email = None
+        password = data.get("password", None)
+        if password == "":
+            password = None
+        if username is None or email is None or password is None:
+            raise serializers.ValidationError("Username, Email and Password must not be empty")
+        return data
+
+    def get_message(self, obj):
+        return "registration successful"
+
+    def validate_email(self, value):
+        qs = User.objects.filter(email__iexact=value)
+        if qs.exists():
+            raise serializers.ValidationError("duplicate email")
+        return value
+
+    def validate_username(self, value):
+        qs = User.objects.filter(username__iexact=value)
+        if qs.exists():
+            raise serializers.ValidationError("duplicate user name")
+        return value
+
+    def get_token(self, obj):
+        user = obj
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        return token
+
+    def get_expires(self, obj):
+        return timezone.now() - expires_on
+
+
 
 
 
