@@ -1,10 +1,12 @@
 import json
 
 from rest_framework.authentication import SessionAuthentication
-from rest_framework import generics, mixins,permissions
+from rest_framework import generics, mixins,permissions,pagination
 from rest_framework.response import Response
 
 from django.shortcuts import get_object_or_404
+
+from accounts.api.permissions import IsOwnerOrReadOnly
 
 from ..models import Photo
 from .serializers import PhotoSerializer
@@ -20,8 +22,13 @@ def is_json(json_data):
     return is_valid
 
 
+class PageNumbers(pagination.PageNumberPagination):
+    page_size = 10
+
+
 class PhotoAPIDetailView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    pagination_class = PageNumbers
 
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
@@ -49,6 +56,7 @@ class PhotoAPIView(
 ):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    pagination_class = PageNumbers
 
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
@@ -68,3 +76,6 @@ class PhotoAPIView(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+
