@@ -25,7 +25,7 @@ SECRET_KEY = 'c7qgugyt-(sbt2)gg(izv010t#+j2k6nlw)ga&-ni8)*vh15b3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hmlet.herokuapp.com']
+ALLOWED_HOSTS = ['hmlet.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
