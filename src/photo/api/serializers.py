@@ -1,8 +1,11 @@
-from rest_framework import serializers
+from rest_framework import serializers,fields
 from ..models import Photo
 
 
 class PhotoSerializer(serializers.ModelSerializer):
+    flag = serializers.SerializerMethodField()
+
+
     class Meta:
         model = Photo
         fields = [
@@ -10,7 +13,8 @@ class PhotoSerializer(serializers.ModelSerializer):
             'user',
             'content',
             'image',
-            'updated'
+            'updated',
+            'flag'
 
         ]
         read_only_fields = ['user']
@@ -26,3 +30,14 @@ class PhotoSerializer(serializers.ModelSerializer):
         if content is None and image is None:
             raise serializers.ValidationError("Content or Image is required.")
         return data
+
+    def get_flag(self, data):
+        content = data.content
+        if content == "":
+            content = None
+        image = data.image
+        if image == "":
+            image = None
+        if content is None or image is None:
+            return "draft"
+        return None
