@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 def upload_image(instance, filename):
-    return "uploads/{user}/{filename}".format(user=instance.user, filename=filename)
+    return "photos/{user}/{filename}".format(user=instance.user, filename=filename)
 
 
 class PhotoQuerySet(models.QuerySet):

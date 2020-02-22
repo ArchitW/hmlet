@@ -134,8 +134,14 @@ STATICFILES_DIRS = (
 )
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'server-uploads', 'media_root')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server', 'media-root')
+
+
+
 MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 from .restconf.main import  *

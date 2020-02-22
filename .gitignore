@@ -6,12 +6,8 @@ share
 pyvenv.cfg
 .idea
 src/photo/__pycache__/
-server-uploads/media_root/uploads/
-
 src/accounts/migrations/__pycache__/
-
 src/accounts/__pycache__/
-
 src/accounts/api/__pycache__/
-
 *.pyc
+static-server/media-root/
