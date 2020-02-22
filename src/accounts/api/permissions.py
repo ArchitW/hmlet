@@ -1,6 +1,18 @@
 from rest_framework import permissions
 
 
+
+class AnonPermissionOnly(permissions.BasePermission):
+    """
+   Non AUth Users
+    """
+    message = "You are already authenticated, Please log out to register new account"
+
+    def has_permission(self, request, view):
+        return not request.user.is_authenticated()
+
+
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
