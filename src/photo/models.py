@@ -30,4 +30,4 @@ class Photo(models.Model):
 
     @property
     def owner(self):
-        return self.owner
+        return self.user

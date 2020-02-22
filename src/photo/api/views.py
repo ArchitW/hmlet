@@ -48,10 +48,13 @@ class PhotoAPIDetailView(
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
+
+    '''
     def perform_destroy(self, instance):
         if instance is not None:
             return instance.delete()
         return None
+    '''
 
 
 class PhotoAPIView(
